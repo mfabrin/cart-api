@@ -1,4 +1,4 @@
-# Pixartprinting Code challenge: Cart API
+# Cart API
 
 ## Intro
 
