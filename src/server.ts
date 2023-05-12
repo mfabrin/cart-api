@@ -8,7 +8,7 @@ function buildServer() {
         return { status: 'OK' }
     })
 
-    server.register(cartRoutes);
+    server.register(cartRoutes, { prefix: '/api/v1' });
 
     return server;
 }

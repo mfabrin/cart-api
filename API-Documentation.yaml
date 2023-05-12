@@ -45,7 +45,6 @@ paths:
       description: Adding items to the cart will change the status to "building",
       requestBody:
         required: true
-        description: List of items to update the cart
         content:
           application/json:
             schema:
@@ -199,6 +198,10 @@ components:
     CartItemsUpdateRequest:
       type: object
       properties:
+        ecommerce_id: 
+          $ref: '#/components/schemas/IdSchema'
+        customer_id: 
+          $ref: '#/components/schemas/IdSchema'
         item_list:
           type: array
           items:

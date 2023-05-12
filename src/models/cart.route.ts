@@ -1,10 +1,16 @@
 import { FastifyInstance } from "fastify";
-import { getCartHandler, putCartItemsHandler, putCartCheckoutHandler } from "./cart.controller";
+import {
+    cartCreationHandler,
+    cartItemsUpdateHandler,
+    getCartHandler,
+    cartCheckoutHandler
+} from "./cart.controller";
 
 const cartRoutes = async (server: FastifyInstance) => {
-    server.get("/cart/:ecommerceId/:customerId", getCartHandler)
-    server.put("/cart/:ecommerceId/:customerId/items", putCartItemsHandler)
-    server.put("/cart/:ecommerceId/:customerId/checkout", putCartCheckoutHandler)
+    server.post("/cart", cartCreationHandler)
+    server.put("/cart", cartItemsUpdateHandler)
+    server.get("/cart/:ecommerce_id/:customer_id", getCartHandler)
+    server.put("/cart/checkout", cartCheckoutHandler)
 }
 
 export default cartRoutes;
