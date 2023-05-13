@@ -117,7 +117,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewCartRequest'
+              $ref: '#/components/schemas/CartCheckoutRequest'
       responses:
         "204": 
           description: Cart checked out
@@ -146,6 +146,18 @@ components:
           $ref: '#/components/schemas/IdSchema'
         customer_id: 
           $ref: '#/components/schemas/IdSchema'
+        created_at:
+          type: string
+          format: date-time
+          description: The date of cart creation
+        updated_at:
+          type: string
+          format: date-time
+          description: The date of cart creation
+        status:
+          type: string
+          enum: [created, building, checkout]
+          description: The status of the cart
           
     NewCartResponse:
       type: object
@@ -178,10 +190,6 @@ components:
           type: string
           format: date-time
           description: The date of cart creation
-        updated_at:
-          type: string
-          format: date-time
-          description: The date of cart update
         status:
           type: string
           enum: [created, building, checkout]
@@ -205,7 +213,30 @@ components:
         item_list:
           type: array
           items:
-            $ref: '#/components/schemas/Item'
+            $ref: '#/components/schemas/ItemUpdate'
+    CartCheckoutRequest:
+      type: object
+      properties:
+        ecommerce_id: 
+          $ref: '#/components/schemas/IdSchema'
+        customer_id: 
+          $ref: '#/components/schemas/IdSchema'
+          
+    ItemUpdate:
+      type: object
+      properties:
+        product_sku: 
+          type: string
+        product_name: 
+          type: string
+        file_type: 
+          type: string
+        quantity: 
+          type: integer
+        delivery_date:
+          type: string
+          format: date-time
+          
     Item:
       type: object
       properties:
@@ -220,10 +251,7 @@ components:
         delivery_date:
           type: string
           format: date-time
-        unit_price:
-          type: number
-          multipleOf: 0.01
-        total_price:
+        calculated_price:
           type: number
           multipleOf: 0.01
     ErrorResponse: 

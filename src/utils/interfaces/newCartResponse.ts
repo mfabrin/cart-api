@@ -1,4 +1,4 @@
-import { Status } from "utils/enums";
+import { Status } from "../enums";
 
 interface INewCartResponse {
     ecommerce_id: string

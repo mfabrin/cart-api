@@ -13,6 +13,8 @@ import { Status } from "../utils/enums";
 
 
 export const cartCreationHandler = async (request: FastifyRequest<{ Body: INewCartRequest }>, reply: FastifyReply) => {
+    if (!request.body)
+        return reply.status(400).send({ message: 'Payload not provided' } as IErrorResponse);
 
     if (!request.body.customer_id || request.body.customer_id === '')
         return reply.status(400).send({ message: 'Customer id not provided' } as IErrorResponse);
