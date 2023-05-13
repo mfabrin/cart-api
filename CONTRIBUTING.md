@@ -23,6 +23,6 @@ You can customize the port by editing the file `.env`
 
 ## API Reference
 
-API are documented inside .yaml file named `cart_api.yaml`.
+API are documented inside .yaml file named `API-Documentation.yaml`.
 
 You can import it on [swagger editor](https://editor-next.swagger.io) to see available endpoints with schemes.

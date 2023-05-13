@@ -4,7 +4,7 @@ import {
     cartItemsUpdateHandler,
     getCartHandler,
     cartCheckoutHandler
-} from "./cart.controller";
+} from "../controllers/cart.controller";
 
 const cartRoutes = async (server: FastifyInstance) => {
     server.post("/cart", cartCreationHandler)

@@ -4,8 +4,6 @@ interface ICartItem {
     file_type: string
     quantity: number
     delivery_date: Date
-    unit_price: number
-    total_price: number
 }
 
 interface ICartItemUpdateRequest {

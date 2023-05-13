@@ -1,5 +1,6 @@
 import fastify from 'fastify';
-import cartRoutes from './models/cart.route';
+import { dbConnector, cartRoutes } from './plugins';
+
 
 function buildServer() {
     const server = fastify({
@@ -11,9 +12,12 @@ function buildServer() {
         }
     });
 
-    server.get('/healthcheck', async function (req, res) {
+    
+    server.get('/healthcheck', async (req, res) => {
         return { status: 'OK' }
     })
+
+    server.register(dbConnector);
 
     server.register(cartRoutes, { prefix: '/api/v1' });
 
