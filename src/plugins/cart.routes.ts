@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { cartCreationHandler, cartUpdateHandler, getCartHandler, cartCheckoutHandler, cartDeleteHandler } from "../controllers/cart.controller";
 import { cartCreationRequestSchema, cartRequestSchema, cartResponseSchema, cartUpdateRequestSchema, cartCheckoutRequestSchema, cartDeleteRequestSchema } from "../utils/schemas/cart";
 import { errorResponseSchema } from "../utils/schemas/errorResponse";
+import { emptyResponseSchema } from "../utils/schemas";
 
 
 const cartRoutes = async (server: FastifyInstance) => {
@@ -12,8 +13,8 @@ const cartRoutes = async (server: FastifyInstance) => {
             body: cartCreationRequestSchema,
             response: {
                 201: cartResponseSchema,
-                404: errorResponseSchema,
                 400: errorResponseSchema,
+                404: errorResponseSchema,
                 500: errorResponseSchema
             }
         }
@@ -25,8 +26,8 @@ const cartRoutes = async (server: FastifyInstance) => {
             body: cartUpdateRequestSchema,
             response: {
                 200: cartResponseSchema,
-                404: errorResponseSchema,
                 400: errorResponseSchema,
+                404: errorResponseSchema,
                 500: errorResponseSchema
             }
         }
@@ -38,8 +39,8 @@ const cartRoutes = async (server: FastifyInstance) => {
             params: cartRequestSchema,
             response: {
                 200: cartResponseSchema,
-                404: errorResponseSchema,
                 400: errorResponseSchema,
+                404: errorResponseSchema,
                 500: errorResponseSchema
             }
         }
@@ -51,25 +52,25 @@ const cartRoutes = async (server: FastifyInstance) => {
             body: cartCheckoutRequestSchema,
             response: {
                 200: cartResponseSchema,
-                404: errorResponseSchema,
                 400: errorResponseSchema,
+                404: errorResponseSchema,
                 500: errorResponseSchema
             }
         }
     }, cartCheckoutHandler)
 
-    // server.delete("/cart/:ecommerce_id/:customer_id", {
-    //     schema: {
-    //         tags: ['Cart'],
-    //         params: cartDeleteRequestSchema,
-    //         response: {
-    //             200: "Success",
-    //             404: errorResponseSchema,
-    //             400: errorResponseSchema,
-    //             500: errorResponseSchema
-    //         }
-    //     }
-    // }, cartDeleteHandler)
+    server.delete("/cart/delete/:ecommerce_id/:customer_id", {
+        schema: {
+            tags: ['Cart'],
+            params: cartDeleteRequestSchema,
+            response: {
+                204: emptyResponseSchema,
+                400: errorResponseSchema,
+                404: errorResponseSchema,
+                500: errorResponseSchema
+            }
+        }
+    }, cartDeleteHandler)
 }
 
 export default cartRoutes;

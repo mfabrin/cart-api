@@ -180,7 +180,7 @@ export const cartDeleteHandler = async (request: FastifyRequest<{ Params: CartDe
 
         await cart.deleteOne();
 
-        return reply.code(200).send("Cart deleted");
+        return reply.code(204).send("Cart deleted");
     } catch (err) {
         return reply.code(500).send(err);
     }
