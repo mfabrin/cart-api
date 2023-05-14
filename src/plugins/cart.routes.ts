@@ -12,7 +12,7 @@ const cartRoutes = async (server: FastifyInstance) => {
             tags: ['Cart'],
             body: cartCreationRequestSchema,
             response: {
-                201: cartResponseSchema,
+                201: emptyResponseSchema,
                 400: errorResponseSchema,
                 404: errorResponseSchema,
                 500: errorResponseSchema

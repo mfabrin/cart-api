@@ -189,6 +189,24 @@ describe('Cart checkout', () => {
 describe('Delete a cart', () => {
     const server = buildServer();
 
+    test('DELETE: delete a cart without parameters', async () => {
+        const res = await server.inject({
+            method: 'DELETE',
+            url: '/api/v1/cart/delete/3fa85f64-5717-4562-b3fc-2c963f66afa6'
+        })
+
+        expect(res.statusCode).toEqual(404);
+    })
+
+    test('DELETE: delete a non existing cart', async () => {
+        const res = await server.inject({
+            method: 'DELETE',
+            url: '/api/v1/cart/delete/3fa85f64-5717-4562-b3fc-2c963f66afa6/f6a85f64-5717-4562-b3fc-3c963f66afa6'
+        })
+
+        expect(res.statusCode).toEqual(404);
+    })
+
     test('DELETE: delete a cart', async () => {
         const res = await server.inject({
             method: 'DELETE',

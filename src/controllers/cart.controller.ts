@@ -26,24 +26,7 @@ export const cartCreationHandler = async (request: FastifyRequest<{ Body: CartCr
 
         await cart.save();
 
-        const response: CartResponse = {
-            ecommerce_id: cart.ecommerce_id,
-            customer_id: cart.customer_id,
-            created_at: cart.created_at,
-            updated_at: cart.updated_at,
-            status: cart.status,
-            total_price: getTotalPrice(cart),
-            item_list: cart.item_list.map(item => ({
-                product_sku: item.product_sku,
-                product_name: item.product_name,
-                file_type: item.file_type,
-                delivery_date: item.delivery_date,
-                quantity: item.quantity,
-                calculated_price: getItemCalculatedPrice(item, cart.date_checkout)
-            })),
-        };
-
-        return reply.code(201).send(response);
+        return reply.code(201).send("Cart created");
     } catch (err) {
         return reply.code(500).send(err);
     }

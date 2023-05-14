@@ -4,81 +4,98 @@ import { FileType } from '../src/utils/enums';
 import Product from '../src/valueObjects/Product';
 
 
-test('Calculated price PDF', () => {
-    const res = getItemCalculatedPrice(new Product({
-        product_sku: "123",
-        product_name: "My product",
-        file_type: FileType.PDF,
-        delivery_date: new Date(2023, 5, 20),
-        quantity: 150
-    }), undefined);
+const today = new Date();
+const twoDaysLater = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2)
+const threeDaysLater = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
 
-    expect(res).toBe(163.875);
-});
 
-test('Calculated price PSD', () => {
-    const res = getItemCalculatedPrice(new Product({
-        product_sku: "123",
-        product_name: "My product",
-        file_type: FileType.PSD,
-        delivery_date: new Date(2023, 5, 20),
-        quantity: 150
-    }), undefined);
+describe('Item Price Calculation', () => {
 
-    expect(res).toBe(163.875);
-});
+    test('File PDF, no checkout date', () => {
+        const res = getItemCalculatedPrice(new Product({
+            product_sku: "123",
+            product_name: "My product",
+            file_type: FileType.PDF,
+            delivery_date: twoDaysLater,
+            quantity: 150
+        }), undefined);
 
-test('Get cart total price', () => {
-    const cart = new Cart({
-        ecommerce_id: "",
-        customer_id: "",
-        created_at: new Date(),
-        updated_at: new Date(),
-        checkout_date: new Date(),
-        status: "building",
-        item_list: [
-            new Product({
-                product_sku: "123",
-                product_name: "My product",
-                file_type: FileType.PDF,
-                delivery_date: new Date(2023, 5, 20),
-                quantity: 101
-            }), 
-            new Product({
-                product_sku: "123",
-                product_name: "My product",
-                file_type: FileType.PDF,
-                delivery_date: new Date(2023, 5, 15),
-                quantity: 101
-            })
-        ]
+        expect(res).toBe(163.875);
     });
 
-    const res = getTotalPrice(cart);
+    test('File PSD, with checkout date', () => {
+        const res = getItemCalculatedPrice(new Product({
+            product_sku: "123",
+            product_name: "My product",
+            file_type: FileType.PSD,
+            delivery_date: twoDaysLater,
+            quantity: 251
+        }), today);
 
-    expect(res).toBe(163.875);
-});
+        expect(res).toBe(365.958);
+    });
+})
 
-test('Get cart total price', () => {
-    const cart = new Cart({
-        ecommerce_id: "",
-        customer_id: "",
-        created_at: new Date(),
-        updated_at: new Date(),
-        checkout_date: new Date(),
-        status: "building",
-        item_list: [
-            new Product({
-                product_sku: "123",
-                product_name: "My product",
-                file_type: FileType.PDF,
-                delivery_date: new Date(2023, 5, 15),
-                quantity: 202
-            })
-        ]
+
+describe('Cart total price calculation', () => {
+    test('Total price for same products quantity, without checkout date', () => {
+        const cart = new Cart({
+            ecommerce_id: "",
+            customer_id: "",
+            created_at: today,
+            updated_at: today,
+            status: "building",
+            item_list: [
+                new Product({
+                    product_sku: "123",
+                    product_name: "My product",
+                    file_type: FileType.PDF,
+                    delivery_date: twoDaysLater,
+                    quantity: 101
+                }),
+                new Product({
+                    product_sku: "123",
+                    product_name: "My product",
+                    file_type: FileType.PSD,
+                    delivery_date: twoDaysLater,
+                    quantity: 101
+                })
+            ]
+        });
+
+        const res = getTotalPrice(cart);
+
+        expect(res).toBe(239.875);
     });
 
-    const res = getTotalPrice(cart);
+    test('Cart total price with different products quantity, different delivery_dates, with checkout date', () => {
+        const cart = new Cart({
+            ecommerce_id: "",
+            customer_id: "",
+            created_at: today,
+            updated_at: today,
+            date_checkout: today,
+            status: "checkout",
+            item_list: [
+                new Product({
+                    product_sku: "123",
+                    product_name: "My product",
+                    file_type: FileType.PDF,
+                    delivery_date: twoDaysLater,
+                    quantity: 500
+                }),
+                new Product({
+                    product_sku: "123",
+                    product_name: "My product",
+                    file_type: FileType.PSD,
+                    delivery_date: threeDaysLater,
+                    quantity: 1500
+                })
+            ]
+        });
 
-    expect(res).toBe(163.875);
-});
+        const res = getTotalPrice(cart);
+
+        expect(res).toBe(2403);
+    });
+})
