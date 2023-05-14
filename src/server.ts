@@ -1,6 +1,7 @@
 import fastify from 'fastify';
+import swagger from '@fastify/swagger';
+import swaggerUI from '@fastify/swagger-ui';
 import { dbConnector, cartRoutes } from './plugins';
-
 
 function buildServer() {
     const server = fastify({
@@ -9,10 +10,20 @@ function buildServer() {
             transport: {
                 target: 'pino-pretty'
             }
-        }
+        },
+        ajv: {
+            customOptions: {
+                strict: 'log',
+                keywords: ['kind', 'modifier'],
+            },
+        },
     });
 
-    
+    server.register(swagger);
+    server.register(swaggerUI, {
+        routePrefix: "/docs"
+    });
+
     server.get('/healthcheck', async (req, res) => {
         return { status: 'OK' }
     })

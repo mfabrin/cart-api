@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.8.1",
+    "@sinclair/typebox": "^0.28.10",
     "dotenv": "^16.0.3",
     "fastify": "^4.17.0",
     "mongoose": "^7.1.1",

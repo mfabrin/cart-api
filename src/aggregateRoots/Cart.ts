@@ -1,8 +1,9 @@
 import { Schema, model } from 'mongoose';
 import { ProductSchema } from '../valueObjects';
 import { Status } from '../utils/enums';
+import { ICart } from '../utils/interfaces';
 
-const CartSchema = new Schema({
+export const CartSchema = new Schema({
     ecommerce_id: {
         type: String,
         require: true,
@@ -22,19 +23,19 @@ const CartSchema = new Schema({
     created_at: {
         type: Date,
         require: true,
-        default: Date.now
+        default: new Date()
     },
     updated_at: {
         type: Date,
         require: true,
-        default: Date.now
+        default: new Date()
     },
-    checkout_at: Date,
-    items: {
+    date_checkout: Date,
+    item_list: {
         type: Array,
         Schema: ProductSchema,
         default: []
     }
 });
 
-export default model('Cart', CartSchema);
+export default model<ICart>('Cart', CartSchema);

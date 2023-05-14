@@ -16,10 +16,10 @@ const ProductSchema = new Schema({
         require: true,
         default: ''
     },
-    delivery_at: {
+    delivery_date: {
         type: Date,
         require: true,
-        default: Date.now
+        default: new Date()
     },
     quantity: {
         type: Number,
