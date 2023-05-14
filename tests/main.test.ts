@@ -7,7 +7,7 @@ describe('Cart creation', () => {
     test('POST: create a cart', async () => {
         const res = await server.inject({
             method: 'POST',
-            url: '/api/v1/cart',
+            url: '/api/v1/cart/create',
             payload: {
                 ecommerce_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 customer_id: '6fa85f64-5717-4562-b3fc-3c963f66afa6',
@@ -23,7 +23,7 @@ describe('Cart creation', () => {
     test('POST: create a cart without some parameters', async () => {
         const res = await server.inject({
             method: 'POST',
-            url: '/api/v1/cart',
+            url: '/api/v1/cart/create',
             payload: {
                 ecommerce_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 customer_id: '6fa85f64-5717-4562-b3fc-3c963f66afa6',
@@ -33,10 +33,10 @@ describe('Cart creation', () => {
         expect(res.statusCode).toEqual(400);
     })
 
-    test('POST: create a cart with existing cart parameters', async () => {
+    test('POST: create a cart that already exist', async () => {
         const res = await server.inject({
             method: 'POST',
-            url: '/api/v1/cart',
+            url: '/api/v1/cart/create',
             payload: {
                 ecommerce_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 customer_id: '6fa85f64-5717-4562-b3fc-3c963f66afa6',
@@ -56,7 +56,7 @@ describe('Cart update', () => {
     test('PUT: update NON existing cart', async () => {
         const res = await server.inject({
             method: 'PUT',
-            url: '/api/v1/cart',
+            url: '/api/v1/cart/update',
             payload: {
                 ecommerce_id: '3fa85f64-5717-4562-b3fc-3c963f66afa6',
                 customer_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -73,10 +73,29 @@ describe('Cart update', () => {
         expect(res.statusCode).toEqual(404);
     })
 
+    test('PUT: update with less parameters', async () => {
+        const res = await server.inject({
+            method: 'PUT',
+            url: '/api/v1/cart/update',
+            payload: {
+                ecommerce_id: '3fa85f64-5717-4562-b3fc-3c963f66afa6',
+                item_list: [{
+                    "product_sku": "123",
+                    "product_name": "My product",
+                    "file_type": "PDF",
+                    "delivery_date": new Date("2023-05-15T11:11:02.474+0000"),
+                    "quantity": 150
+                }]
+            }
+        })
+
+        expect(res.statusCode).toEqual(400);
+    })
+
     test('PUT: update existing cart', async () => {
         const res = await server.inject({
             method: 'PUT',
-            url: '/api/v1/cart',
+            url: '/api/v1/cart/update',
             payload: {
                 ecommerce_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 customer_id: '6fa85f64-5717-4562-b3fc-3c963f66afa6',
@@ -103,7 +122,7 @@ describe('Get a cart', () => {
             url: '/api/v1/cart/3fa85f64-5717-4562-b3fc-2c963f66afa6'
         })
 
-        expect(res.statusCode).toEqual(400);
+        expect(res.statusCode).toEqual(404);
     })
 
     test('GET: get a non existing cart', async () => {
@@ -131,7 +150,7 @@ describe('Cart checkout', () => {
     test('PUT: checkout a cart without some parameters', async () => {
         const res = await server.inject({
             method: 'PUT',
-            url: '/api/v1/cart/checkout', 
+            url: '/api/v1/cart/checkout',
             payload: {
                 customer_id: ""
             }
@@ -143,9 +162,9 @@ describe('Cart checkout', () => {
     test('PUT: checkout a non existing cart', async () => {
         const res = await server.inject({
             method: 'PUT',
-            url: '/api/v1/cart/checkout', 
+            url: '/api/v1/cart/checkout',
             payload: {
-                ecommerce_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", 
+                ecommerce_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 customer_id: "3fa85f64-5717-4562-b3fc-3c963f66afa6"
             }
         })
@@ -156,9 +175,9 @@ describe('Cart checkout', () => {
     test('PUT: checkout a cart', async () => {
         const res = await server.inject({
             method: 'PUT',
-            url: '/api/v1/cart/checkout', 
+            url: '/api/v1/cart/checkout',
             payload: {
-                ecommerce_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", 
+                ecommerce_id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 customer_id: "6fa85f64-5717-4562-b3fc-3c963f66afa6"
             }
         })
@@ -166,3 +185,16 @@ describe('Cart checkout', () => {
         expect(res.statusCode).toEqual(200);
     })
 });
+
+// describe('Delete a cart', () => {
+//     const server = buildServer();
+
+//     test('DELETE: delete a cart', async () => {
+//         const res = await server.inject({
+//             method: 'DELETE',
+//             url: '/api/v1/cart/delete/3fa85f64-5717-4562-b3fc-2c963f66afa6/6fa85f64-5717-4562-b3fc-3c963f66afa6'
+//         })
+
+//         expect(res.statusCode).toEqual(200);
+//     })
+// })

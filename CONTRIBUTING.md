@@ -1,5 +1,5 @@
 
-# Installation
+# Cart API Challenge
 
 Download the project and install dependencies via npm
 
@@ -11,16 +11,17 @@ Run the app
 ```bash
 npm start
 ```
+Now server is running on port 3000 and you can call endpoints by `http://localhost:3000/api/v1` (you can customize the port by editing the file `.env`)
 
-Run the test
+You can access API Documentation by `http://localhost:3000/docs`
+
+
+To test endpoints run 
 ```bash
-npm test
+npm run test:main
 ```
 
-Now server is listening on port 3000 and you can access endpoints by `http://localhost:3000/api/v1`
-
-You can customize the port by editing the file `.env`
-
-## API Reference
-
-You can view API documentation navigating to `http://localhost:3000/api/v1/docs`
+To test price calculation functions 
+```bash
+npm run test:calcs
+```

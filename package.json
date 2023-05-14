@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "ts-node --transpileOnly -r dotenv/config src/main.ts",
-    "test": "jest --detectOpenHandles --forceExit --setupFiles dotenv/config"
+    "test:main": "jest --detectOpenHandles --forceExit --setupFiles dotenv/config -- main.test",
+    "test:calcs": "jest --detectOpenHandles --forceExit --setupFiles dotenv/config -- price-calculation.test"
   },
   "keywords": [],
   "author": "",

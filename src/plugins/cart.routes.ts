@@ -1,14 +1,14 @@
 import { FastifyInstance } from "fastify";
-import { cartCreationHandler, cartUpdateHandler, getCartHandler, cartCheckoutHandler } from "../controllers/cart.controller";
-import { cartCreationRequestSchema, cartRequestSchema, cartResponseSchema, cartUpdateRequestSchema, cartCheckoutRequestSchema } from "../utils/schemas/cart";
+import { cartCreationHandler, cartUpdateHandler, getCartHandler, cartCheckoutHandler, cartDeleteHandler } from "../controllers/cart.controller";
+import { cartCreationRequestSchema, cartRequestSchema, cartResponseSchema, cartUpdateRequestSchema, cartCheckoutRequestSchema, cartDeleteRequestSchema } from "../utils/schemas/cart";
 import { errorResponseSchema } from "../utils/schemas/errorResponse";
 
 
 const cartRoutes = async (server: FastifyInstance) => {
     server.post(
-        "/cart", {
+        "/cart/create", {
         schema: {
-            tags: ["Cart"],
+            tags: ['Cart'],
             body: cartCreationRequestSchema,
             response: {
                 201: cartResponseSchema,
@@ -19,9 +19,9 @@ const cartRoutes = async (server: FastifyInstance) => {
         }
     }, cartCreationHandler)
 
-    server.put("/cart", {
+    server.put("/cart/update", {
         schema: {
-            tags: ["Cart"],
+            tags: ['Cart'],
             body: cartUpdateRequestSchema,
             response: {
                 200: cartResponseSchema,
@@ -34,7 +34,7 @@ const cartRoutes = async (server: FastifyInstance) => {
 
     server.get("/cart/:ecommerce_id/:customer_id", {
         schema: {
-            tags: ["Cart"],
+            tags: ['Cart'],
             params: cartRequestSchema,
             response: {
                 200: cartResponseSchema,
@@ -47,7 +47,7 @@ const cartRoutes = async (server: FastifyInstance) => {
 
     server.put("/cart/checkout", {
         schema: {
-            tags: ["Cart"],
+            tags: ['Cart'],
             body: cartCheckoutRequestSchema,
             response: {
                 200: cartResponseSchema,
@@ -57,6 +57,19 @@ const cartRoutes = async (server: FastifyInstance) => {
             }
         }
     }, cartCheckoutHandler)
+
+    // server.delete("/cart/:ecommerce_id/:customer_id", {
+    //     schema: {
+    //         tags: ['Cart'],
+    //         params: cartDeleteRequestSchema,
+    //         response: {
+    //             200: "Success",
+    //             404: errorResponseSchema,
+    //             400: errorResponseSchema,
+    //             500: errorResponseSchema
+    //         }
+    //     }
+    // }, cartDeleteHandler)
 }
 
 export default cartRoutes;

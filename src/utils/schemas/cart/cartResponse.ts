@@ -7,7 +7,7 @@ const itemSchema = Type.Object({
     file_type: Type.String(),
     quantity: Type.Number(),
     delivery_date: Type.Date({ format: "date-time" }),
-    calculated_price: Type.Number()
+    calculated_price: Type.Number({ default: 0 })
 })
 
 export const cartResponseSchema = Type.Object({
@@ -16,7 +16,7 @@ export const cartResponseSchema = Type.Object({
     created_at: Type.Date({ format: "date-time" }),
     updated_at: Type.Date({ format: "date-time" }),
     status: Type.String(),
-    total_price: Type.Number(),
+    total_price: Type.Number({ default: 0 }),
     item_list: Type.Array(itemSchema)
 })
 

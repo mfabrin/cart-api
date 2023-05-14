@@ -3,3 +3,4 @@ export { cartCreationRequestSchema, CartCreationRequest } from './cartCreationRe
 export { cartRequestSchema, CartRequest } from './cartRequest';
 export { cartResponseSchema, CartResponse } from './cartResponse';
 export { cartUpdateRequestSchema, CartUpdateRequest } from './cartUpdateRequest';
+export { cartDeleteRequestSchema, CartDeleteRequest } from './cartDeleteRequest';

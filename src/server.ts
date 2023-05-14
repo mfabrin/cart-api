@@ -1,7 +1,7 @@
 import fastify from 'fastify';
-import swagger from '@fastify/swagger';
-import swaggerUI from '@fastify/swagger-ui';
 import { dbConnector, cartRoutes } from './plugins';
+import { cartCheckoutRequestSchema, cartCreationRequestSchema, cartDeleteRequestSchema, cartRequestSchema, cartResponseSchema, cartUpdateRequestSchema } from './utils/schemas/cart';
+import fastifySwagger from '@fastify/swagger';
 
 function buildServer() {
     const server = fastify({
@@ -19,13 +19,27 @@ function buildServer() {
         },
     });
 
-    server.register(swagger);
-    server.register(swaggerUI, {
-        routePrefix: "/docs"
+    server.register(fastifySwagger, {
+        swagger: {
+            info: {
+                title: 'Cart API Challenge',
+                version: '1.0.0'
+            },
+            tags: [
+                { name: 'Cart', description: 'Cart endpoints' },
+            ],
+            definitions: {
+                CartCreationRequest: cartCreationRequestSchema,
+                CartUpdateRequest: cartUpdateRequestSchema,
+                CartRequest: cartRequestSchema,
+                CartResponse: cartResponseSchema as any,
+                CartCheckoutRequest: cartCheckoutRequestSchema,
+                CartDeleteRequest: cartDeleteRequestSchema
+            }
+        }
     });
-
-    server.get('/healthcheck', async (req, res) => {
-        return { status: 'OK' }
+    server.register(require('@fastify/swagger-ui'), {
+        routePrefix: "/docs"
     })
 
     server.register(dbConnector);
