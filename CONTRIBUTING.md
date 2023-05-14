@@ -54,7 +54,7 @@ This is the command to run tests for price calculation
 npm run test:calcs
 ```
 
-## Documentation
+## API Reference
 
 I've added `swagger` to the project so all endpoints and schemas are better explained at this url `http://localhost:3000/docs`, but here is an overview of API.
 
