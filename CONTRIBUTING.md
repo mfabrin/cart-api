@@ -56,7 +56,7 @@ npm run test:calcs
 
 ## Documentation
 
-I've added `swagger` to the project all endpoints and schemas are better explained here `http://localhost:3000/docs`, but here is an overview of API.
+I've added `swagger` to the project so all endpoints and schemas are better explained at this url `http://localhost:3000/docs`, but here is an overview of API.
 
 Cart API comes with four endpoints:
 - the API to create a cart
