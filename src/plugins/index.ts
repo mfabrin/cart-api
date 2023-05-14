@@ -1,2 +1,2 @@
-export { default as dbConnector } from './dbConnector';
-export { default as cartRoutes } from './cartRoutes';
+export { default as dbConnector } from './db.connector';
+export { default as cartRoutes } from './cart.routes';

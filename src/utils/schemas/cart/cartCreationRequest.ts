@@ -1,7 +1,7 @@
 import { Type, Static } from '@sinclair/typebox';
-import { Status } from '../enums';
+import { Status } from '../../enums';
 
-export const newCartRequestSchema = Type.Object({
+export const cartCreationRequestSchema = Type.Object({
     ecommerce_id: Type.String({ format: "uuid" }),
     customer_id: Type.String({ format: "uuid" }),
     created_at: Type.String({ format: "date-time" }),
@@ -9,4 +9,4 @@ export const newCartRequestSchema = Type.Object({
     status: Type.Enum(Status)
 })
 
-export type NewCartRequest = Static<typeof newCartRequestSchema>;
+export type CartCreationRequest = Static<typeof cartCreationRequestSchema>;

@@ -14,6 +14,7 @@ export const cartResponseSchema = Type.Object({
     ecommerce_id: Type.String({ format: "uuid" }),
     customer_id: Type.String({ format: "uuid" }),
     created_at: Type.Date({ format: "date-time" }),
+    updated_at: Type.Date({ format: "date-time" }),
     status: Type.String(),
     total_price: Type.Number(),
     item_list: Type.Array(itemSchema)

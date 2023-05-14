@@ -1,10 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { cartCreationHandler, cartUpdateHandler, getCartHandler, cartCheckoutHandler } from "../controllers/cart.controller";
-import { newCartRequestSchema } from "../utils/schemas/newCartRequest";
-import { cartUpdateRequestSchema } from "../utils/schemas/cartUpdateRequest";
-import { cartCheckoutRequestSchema } from "../utils/schemas/cartCheckoutRequest";
-import { cartRequestSchema } from "../utils/schemas/cartRequest";
-import { cartResponseSchema } from "../utils/schemas/cartResponse";
+import { cartCreationRequestSchema, cartRequestSchema, cartResponseSchema, cartUpdateRequestSchema, cartCheckoutRequestSchema } from "../utils/schemas/cart";
+import { errorResponseSchema } from "../utils/schemas/errorResponse";
 
 
 const cartRoutes = async (server: FastifyInstance) => {
@@ -12,9 +9,12 @@ const cartRoutes = async (server: FastifyInstance) => {
         "/cart", {
         schema: {
             tags: ["Cart"],
-            body: newCartRequestSchema,
+            body: cartCreationRequestSchema,
             response: {
-                201: cartResponseSchema
+                201: cartResponseSchema,
+                404: errorResponseSchema,
+                400: errorResponseSchema,
+                500: errorResponseSchema
             }
         }
     }, cartCreationHandler)
@@ -24,7 +24,10 @@ const cartRoutes = async (server: FastifyInstance) => {
             tags: ["Cart"],
             body: cartUpdateRequestSchema,
             response: {
-                200: cartResponseSchema
+                200: cartResponseSchema,
+                404: errorResponseSchema,
+                400: errorResponseSchema,
+                500: errorResponseSchema
             }
         }
     }, cartUpdateHandler)
@@ -34,7 +37,10 @@ const cartRoutes = async (server: FastifyInstance) => {
             tags: ["Cart"],
             params: cartRequestSchema,
             response: {
-                200: cartResponseSchema
+                200: cartResponseSchema,
+                404: errorResponseSchema,
+                400: errorResponseSchema,
+                500: errorResponseSchema
             }
         }
     }, getCartHandler)
@@ -44,7 +50,10 @@ const cartRoutes = async (server: FastifyInstance) => {
             tags: ["Cart"],
             body: cartCheckoutRequestSchema,
             response: {
-                200: cartResponseSchema
+                200: cartResponseSchema,
+                404: errorResponseSchema,
+                400: errorResponseSchema,
+                500: errorResponseSchema
             }
         }
     }, cartCheckoutHandler)

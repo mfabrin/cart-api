@@ -1,0 +1,1 @@
+export { errorResponseSchema, ErrorResponse } from './errorResponse';
