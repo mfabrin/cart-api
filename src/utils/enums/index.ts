@@ -1,2 +1,2 @@
-export { default as Status } from './status';
+export { default as Status } from './Status';
 export { default as FileType } from './FileType';
