@@ -3,7 +3,7 @@ import { Status } from "../utils/enums";
 import Cart from "../aggregateRoots/Cart";
 import { ProductSchema } from "../valueObjects";
 import { getTotalPrice, getItemCalculatedPrice } from "../services/cart.services";
-import { CartCheckoutRequest, CartCreationRequest, CartDeleteRequest, CartRequest, CartResponse, CartUpdateRequest } from "../utils/schemas/cart";
+import { CartCheckoutRequest, CartCreationRequest, CartCreationResponse, CartDeleteRequest, CartRequest, CartResponse, CartUpdateRequest } from "../utils/schemas/cart";
 
 
 export const cartCreationHandler = async (request: FastifyRequest<{ Body: CartCreationRequest }>, reply: FastifyReply) => {
@@ -26,7 +26,12 @@ export const cartCreationHandler = async (request: FastifyRequest<{ Body: CartCr
 
         await cart.save();
 
-        return reply.code(201).send("Cart created");
+        const response: CartCreationResponse = {
+            ecommerce_id: cart.ecommerce_id,
+            customer_id: cart.customer_id
+        }
+
+        return reply.code(201).send(response);
     } catch (err) {
         return reply.code(500).send(err);
     }

@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { cartCreationHandler, cartUpdateHandler, getCartHandler, cartCheckoutHandler, cartDeleteHandler } from "../controllers/cart.controller";
-import { cartCreationRequestSchema, cartRequestSchema, cartResponseSchema, cartUpdateRequestSchema, cartCheckoutRequestSchema, cartDeleteRequestSchema } from "../utils/schemas/cart";
+import { cartCreationRequestSchema, cartRequestSchema, cartResponseSchema, cartUpdateRequestSchema, cartCheckoutRequestSchema, cartDeleteRequestSchema, cartCreationResponseSchema } from "../utils/schemas/cart";
 import { errorResponseSchema } from "../utils/schemas/errorResponse";
 import { emptyResponseSchema } from "../utils/schemas";
 
@@ -12,7 +12,7 @@ const cartRoutes = async (server: FastifyInstance) => {
             tags: ['Cart'],
             body: cartCreationRequestSchema,
             response: {
-                201: emptyResponseSchema,
+                201: cartCreationResponseSchema,
                 400: errorResponseSchema,
                 404: errorResponseSchema,
                 500: errorResponseSchema
