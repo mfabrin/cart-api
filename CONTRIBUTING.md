@@ -40,8 +40,8 @@ I used mongodb to store the cart data; it was not requested by the challenge but
 ## Running Tests
 
 I've prepared two types of test: 
-- One to test NodeJS server endpoints
-- Other one to test functions that calculate cart total price and single item price based on policies.
+- the first one to test NodeJS server endpoints
+- the second one to test functions that calculate cart total price and single item price based on policies.
 
 This is the command to run tests for endpoints
 
@@ -57,14 +57,6 @@ npm run test:calcs
 ## API Reference
 
 I've added `swagger` to the project so all endpoints and schemas are better explained at this url `http://localhost:3000/docs`, but here is an overview of API.
-
-Cart API comes with four endpoints:
-- the API to create a cart
-- the API to update a cart
-- the API to view a cart
-- the API to checkout a cart
-- the API to delete a cart
-
 
 #### Create a cart
 
